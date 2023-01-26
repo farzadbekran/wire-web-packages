@@ -26,15 +26,9 @@ type DexieObservable = {_dbSchema?: Object};
 
 export class IndexedDBEngine implements CRUDEngine {
   private db: Dexie & DexieObservable = new Dexie('');
-  private readonly logger: logdown.Logger;
   public storeName = '';
 
-  constructor() {
-    this.logger = logdown('@wireapp/store-engine-dexie', {
-      logger: console,
-      markdown: false,
-    });
-  }
+  constructor() {}
 
   // Check if IndexedDB is accessible (which won't be the case when browsing with Firefox in private mode or being on
   // page "about:blank")
@@ -196,11 +190,9 @@ export class IndexedDBEngine implements CRUDEngine {
     const granted = await navigator.storage.persist();
 
     if (granted) {
-      this.logger.info('Storage will not be cleared except by explicit user action');
       return true;
     }
 
-    this.logger.info('Storage may be cleared by the UA under storage pressure.');
     return false;
   }
 
